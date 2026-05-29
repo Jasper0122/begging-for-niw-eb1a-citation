@@ -186,6 +186,40 @@ Gmail not connected? The skill still works — you copy the finalized emails man
 
 ---
 
+## 🤖 Automated mode (set-and-forget)
+
+Once you've run the skill once to seed the queue, set up a routine that runs every 3 days automatically — no input needed from you.
+
+**What the routine does each run:**
+1. **Checks Gmail sent folder** — confirms which previously drafted emails were actually sent
+2. **Checks Gmail inbox for replies** — detects responses from contacted authors
+3. **Drafts the next email** — picks the next paper from `case-demo/queue.json`, writes a personalized email, drops it into Gmail Drafts
+4. **Logs the run** — commits a timestamped entry to `case-demo/outreach_log.md` on GitHub
+
+**Your only job:** open Gmail every few days and click Send on whatever draft is waiting.
+
+### Setup
+
+Complete the Gmail MCP setup above first, then in Claude Code run:
+```
+/schedule
+```
+
+Describe what you want:
+> "Every 3 days, run the NIW citation outreach routine — fetch the queue from my GitHub repo, check Gmail for sent/reply status, create a draft for the next pending paper, and log the result."
+
+Point it at this repo and attach the Gmail connector. The routine reads `case-demo/queue.json` from GitHub and uses Gmail MCP for everything else. No API keys or database needed — Gmail is the source of truth for status.
+
+### Tracking files
+
+| File | Purpose | Updated by |
+|------|---------|------------|
+| `case-demo/queue.json` | Paper queue with metadata for email generation | `/niw-citation` skill |
+| `case-demo/outreach_log.md` | Log of every routine run | Routine (auto-commit) |
+| `case-demo/snapshots/` | Citation count snapshots | `python case-demo/snapshot.py` |
+
+---
+
 ## 🤔 Why not just use ChatGPT / Google Scholar alerts?
 
 Scholar alerts tell you when new papers cite you — after the fact, months later, when the paper is already published.
