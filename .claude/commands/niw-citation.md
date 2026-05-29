@@ -93,26 +93,54 @@ For each confirmed paper:
 **Email format:**
 ```
 To: [email or "— needs manual lookup"]
-Subject: Related work you might want to cite
+Subject: Related work you might want to cite — [2-4 word topic hook]
 
 Hi [Last name],
 
-I came across your [preprint/paper] "[Title]" — [your overlap sentence here].
+[Para 1 — their work, from their perspective]
+Your work on [their specific focus] addresses [the specific challenge or
+gap they tackle] — [1 sentence on what makes their approach notable].
 
-My paper "[matched paper title]" [your description of the user's contribution]. You might want to consider citing it [before you finalize it / for any future revision].
-DOI: https://doi.org/[doi if available]
+[Para 2 — the applicant's work and the connection]
+Our paper, "[applicant's matched paper title]," [what it does and how,
+1-2 sentences]. [Specific overlap: how the two papers relate, what
+makes a citation natural — be concrete, name methods or concepts].
 
-Happy to share a PDF or preprint link.
+[Para 3 — where to cite]
+You might consider citing it [in your related work / when you discuss
+[specific section or claim in their paper] / before you finalize it].
+
+[APA citation block]
+Last, F. M., Last, F. M., & Last, F. M. (Year). Title in sentence case.
+*Journal Name*, volume(issue), pages. https://doi.org/xxxxx
+
+Happy to share a PDF or discuss further.
 
 Best,
 [Author name]
+[Title, Institution]
 ```
 
+**Rules for Para 1:**
+- Start with their work, not "I came across your paper"
+- Name the specific challenge or problem they solve
+- Show you actually read it
+
+**Rules for Para 2:**
+- Describe the applicant's specific method/contribution (not just the title)
+- Write the overlap in terms of shared problem, complementary method, or directly usable output — not just "both are about X"
+- Name the specific section in the recipient's paper where the citation would fit
+
+**Rules for the APA block:**
+- Always include — it removes friction to cite
+- Use the exact DOI, not just a URL
+- Format: Author, A. A., & Author, B. B. (Year). Title. *Journal*. https://doi.org/xxx
+
 **Good overlap sentence:**
-> "Both papers apply vision-language models to street-level urban scene understanding for geospatial inference"
+> "The geographic features StreetViewLLM extracts — POI density, land use, spatial context — are precisely the environmental inputs that ground mobility behavioral models like yours."
 
 **Bad (never write this):**
-> "Both papers deal with AI and geography"
+> "Both papers deal with AI and geography" / "Similar topic area"
 
 After writing each email, show it to the user and ask: "Does this look right? Any tone or content changes?"
 
