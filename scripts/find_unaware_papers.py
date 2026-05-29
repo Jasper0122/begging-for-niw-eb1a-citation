@@ -79,6 +79,8 @@ def resolve_paper_topics(papers: list[dict]) -> dict[str, str]:
     topics = {}
     for p in papers:
         oa_id = p.get("openalex_id", "")
+
+        # Try DOI first
         if not oa_id and p.get("doi"):
             doi = p["doi"].replace("https://doi.org/", "").strip()
             results = Works().filter(doi=doi).select(["id", "topics"]).get()
@@ -87,6 +89,8 @@ def resolve_paper_topics(papers: list[dict]) -> dict[str, str]:
                 p["openalex_id"] = oa_id
                 for t in results[0].get("topics", [])[:5]:
                     topics[t["id"]] = t.get("display_name", "")
+
+        # Try openalex_id directly
         elif oa_id:
             try:
                 work = Works()[oa_id.split("/")[-1]]
@@ -94,7 +98,22 @@ def resolve_paper_topics(papers: list[dict]) -> dict[str, str]:
                     topics[t["id"]] = t.get("display_name", "")
             except Exception:
                 pass
-        time.sleep(0.2)
+
+        # Fallback: title search
+        if not oa_id and p.get("title"):
+            try:
+                results = Works().search(p["title"]).select(["id", "title", "topics"]).get(per_page=3)
+                for r in results:
+                    if p["title"].lower()[:40] in (r.get("title") or "").lower():
+                        p["openalex_id"] = r["id"]
+                        for t in r.get("topics", [])[:5]:
+                            topics[t["id"]] = t.get("display_name", "")
+                        print(f"    Found via title: {r.get('title','')[:60]}")
+                        break
+            except Exception:
+                pass
+
+        time.sleep(0.3)
     return topics
 
 
@@ -151,39 +170,91 @@ def find_related_recent(topic_id: str, exclude: set, limit: int = 50) -> list[di
         return []
 
 
+def extract_keywords(papers: list[dict]) -> set[str]:
+    """Pull domain-specific terms from the applicant's paper titles.
+    Filters generic academic words so only field-specific terms remain."""
+    generic = {
+        # function words
+        "a","an","the","of","in","for","on","with","and","or","to","from",
+        "via","using","based","through","by","is","are","into","its","this",
+        "that","their","our","we","as","at","be","been","has","have","can",
+        # generic academic nouns / verbs
+        "study","analysis","approach","method","model","framework","system",
+        "data","dataset","results","case","review","survey","evaluation",
+        "assessment","integration","evaluation","application","technique",
+        "performance","effect","impact","role","use","used","large","scale",
+        "multi","new","novel","deep","learning","based","driven","towards",
+        "toward","high","low","real","world","work","paper","research",
+        "proposed","development","construction","constructing","extracting",
+        "powering","bridging","integrating","arbitration","characterization",
+        "cost","natural","enhanced","conceptual","evaluation","language",
+        # too-broad domain words that cause cross-field noise
+        "built","environment","earth","observation","disparities","coverage",
+        "economic","disaster","disasters","databases","database","across",
+        "regions","cities","global","spatial","temporal","network","networks",
+        "detection","prediction","estimation","mapping","classification",
+        # too-common 4-letter words
+        "from","with","that","this","have","more","also","been","some",
+    }
+    keywords = set()
+    for p in papers:
+        title = (p.get("title") or "").lower()
+        # only keep words ≥ 6 chars that aren't in the generic list
+        for word in re.findall(r"[a-z][a-z0-9\-]{5,}", title):
+            if word not in generic:
+                keywords.add(word)
+    return keywords
+
+
+def keyword_overlap(paper: dict, my_keywords: set) -> int:
+    """Count how many of the applicant's keywords appear in the candidate title."""
+    title = (paper.get("title") or "").lower()
+    return sum(1 for kw in my_keywords if kw in title)
+
+
 # ─── SCORING ─────────────────────────────────────────────────────────────────
 
-def score_paper(paper: dict, my_topic_ids: set) -> float:
+def score_paper(paper: dict, my_topic_ids: set, my_keywords: set) -> float:
     s = 0
 
-    # Preprint = most editable
-    if paper.get("type") == "preprint":
-        s += 30
+    # Must have keyword relevance — hard filter
+    kw_hits = keyword_overlap(paper, my_keywords)
+    if kw_hits == 0:
+        return 0.0   # irrelevant, exclude
 
-    # Recency
-    year = paper.get("publication_year", 0)
-    if year >= 2025:
-        s += 20
-    elif year >= 2024:
-        s += 15
-    elif year >= 2023:
-        s += 8
+    # Keyword relevance bonus
+    s += min(kw_hits * 10, 30)
 
     # Topic overlap
     paper_topic_ids = {t.get("id", "") for t in paper.get("topics", [])}
     overlap = len(my_topic_ids & paper_topic_ids)
-    s += min(overlap * 8, 24)
+    if overlap == 0:
+        return 0.0   # different field, exclude
+    s += min(overlap * 6, 18)
 
-    # Has DOI (real, findable paper)
+    # Preprint = most editable
+    if paper.get("type") == "preprint":
+        s += 25
+
+    # Recency
+    year = paper.get("publication_year", 0)
+    if year >= 2025:
+        s += 15
+    elif year >= 2024:
+        s += 10
+    elif year >= 2023:
+        s += 5
+
+    # Has DOI
     if paper.get("doi"):
         s += 5
 
     # Small team = more responsive
     n_authors = len(paper.get("authorships", []))
     if n_authors <= 3:
-        s += 10
+        s += 8
     elif n_authors <= 6:
-        s += 5
+        s += 4
 
     return round(s, 1)
 
@@ -264,10 +335,26 @@ def run(papers: list[dict], author_id: str, author_name: str,
         print("\nNo candidates found. Try broader keywords.")
         return []
 
+    # Deduplicate by normalized title (catches same paper with different versions)
+    seen_titles: set[str] = set()
+    deduped: dict[str, dict] = {}
+    for pid, p in candidates.items():
+        norm_title = re.sub(r"\s+", " ", (p.get("title") or "").lower().strip())[:80]
+        if norm_title and norm_title not in seen_titles:
+            seen_titles.add(norm_title)
+            deduped[pid] = p
+    candidates = deduped
+
     my_topic_ids = set(my_topics.keys())
+    my_keywords  = extract_keywords(papers)
+    print(f"\nKeywords from your titles: {sorted(my_keywords)[:15]}")
+
     candidate_list = list(candidates.values())
     for c in candidate_list:
-        c["score"] = score_paper(c, my_topic_ids)
+        c["score"] = score_paper(c, my_topic_ids, my_keywords)
+
+    # Filter out zero-score (irrelevant) papers
+    candidate_list = [c for c in candidate_list if c["score"] > 0]
     candidate_list.sort(key=lambda x: x["score"], reverse=True)
     top = candidate_list[:max_outreach]
 
