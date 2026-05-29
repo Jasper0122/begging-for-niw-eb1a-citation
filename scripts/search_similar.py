@@ -121,29 +121,63 @@ class PaperSearcher:
 
     # ── search ────────────────────────────────────────────────────────────────
 
-    def search(self, candidates: list[dict], my_papers: list[dict],
-               top_k: int = 30, min_similarity: float = 0.25) -> list[dict]:
+    def search_per_paper(self, candidates: list[dict], my_papers: list[dict],
+                         top_k_per_paper: int = 10,
+                         min_similarity: float = 0.25) -> list[dict]:
         """
-        Rank candidates by cosine similarity to my_papers.
-        Returns top_k results with similarity >= min_similarity.
+        For each of my_papers, find the most similar candidates independently.
+        Each candidate is assigned to the my_paper that matched it best (no duplicates).
+        Returns a list of groups: [{"my_paper": ..., "results": [...]}, ...]
+        Only groups with at least one result are included.
         """
         cand_embeddings = self.compute_embeddings(candidates)
 
-        # Embed my papers (usually small — no cache needed)
+        # my_paper embeddings (small — skip cache)
+        my_texts = [self._paper_text(p) for p in my_papers]
+        my_embs  = self._embed(my_texts)
+
+        # For each candidate, find which my_paper claims it with highest sim
+        # best_for_cand[cand_idx] = (best_sim, best_my_paper_idx)
+        best_for_cand: dict[int, tuple[float, int]] = {}
+
+        for pi, my_emb in enumerate(my_embs):
+            sims = cosine_similarity(my_emb.reshape(1, -1), cand_embeddings)[0]
+            for ci, sim in enumerate(sims):
+                if sim >= min_similarity:
+                    if ci not in best_for_cand or sim > best_for_cand[ci][0]:
+                        best_for_cand[ci] = (float(sim), pi)
+
+        # Assign each candidate to its best-matching my_paper
+        buckets: dict[int, list[dict]] = {pi: [] for pi in range(len(my_papers))}
+        for ci, (best_sim, pi) in best_for_cand.items():
+            buckets[pi].append({
+                **candidates[ci],
+                "similarity":    best_sim,
+                "matched_paper": my_papers[pi],
+            })
+
+        # Sort each bucket, cap at top_k_per_paper, drop empty groups
+        groups = []
+        for pi, my_paper in enumerate(my_papers):
+            bucket = sorted(buckets[pi], key=lambda x: x["similarity"], reverse=True)
+            bucket = bucket[:top_k_per_paper]
+            if bucket:
+                groups.append({"my_paper": my_paper, "results": bucket})
+
+        return groups
+
+    def search(self, candidates: list[dict], my_papers: list[dict],
+               top_k: int = 30, min_similarity: float = 0.25) -> list[dict]:
+        """Averaged-query search (kept for backward compatibility)."""
+        cand_embeddings = self.compute_embeddings(candidates)
         my_texts    = [self._paper_text(p) for p in my_papers]
         my_embs     = self._embed(my_texts)
         query_emb   = np.mean(my_embs, axis=0).reshape(1, -1)
-
-        sims = cosine_similarity(query_emb, cand_embeddings)[0]
-
-        results = []
-        for idx, sim in enumerate(sims):
-            if sim >= min_similarity:
-                results.append({
-                    **candidates[idx],
-                    "similarity": float(sim),
-                })
-
+        sims        = cosine_similarity(query_emb, cand_embeddings)[0]
+        results = [
+            {**candidates[idx], "similarity": float(sim)}
+            for idx, sim in enumerate(sims) if sim >= min_similarity
+        ]
         results.sort(key=lambda x: x["similarity"], reverse=True)
         return results[:top_k]
 
@@ -168,22 +202,42 @@ class PaperSearcher:
             print()
 
 
-def run(candidates_path: str, top_k: int = 20,
+def _p(s: str) -> None:
+    """Print with GBK-safe fallback for non-ASCII chars."""
+    try:
+        print(s)
+    except UnicodeEncodeError:
+        print(s.encode("ascii", errors="replace").decode("ascii"))
+
+
+def run(candidates_path: str, top_k: int = 10,
         model_type: str = "local", min_sim: float = 0.25) -> list[dict]:
 
-    data       = json.loads(Path(candidates_path).read_text(encoding="utf-8"))
-    author_id  = data["author_id"]
+    data        = json.loads(Path(candidates_path).read_text(encoding="utf-8"))
+    author_id   = data["author_id"]
     author_name = data["author_name"]
-    my_papers  = data["my_papers"]
-    candidates = data["candidates"]
+    my_papers   = data["my_papers"]
+    candidates  = data["candidates"]
 
-    print(f"\nSemantic Search — {author_name}")
-    print(f"  My papers: {len(my_papers)}  |  Candidates: {len(candidates)}")
+    _p(f"\nSemantic Search (per-paper) — {author_name}")
+    _p(f"  My papers: {len(my_papers)}  |  Candidates: {len(candidates)}")
 
     searcher = PaperSearcher(model_type=model_type)
-    results  = searcher.search(candidates, my_papers, top_k=top_k, min_similarity=min_sim)
+    groups   = searcher.search_per_paper(
+        candidates, my_papers,
+        top_k_per_paper=top_k, min_similarity=min_sim
+    )
 
-    searcher.display(results, n=min(10, len(results)))
+    total = sum(len(g["results"]) for g in groups)
+    _p(f"\nResults: {total} candidates across {len(groups)} of your papers\n")
+    for g in groups:
+        mp = g["my_paper"]
+        _p(f"  [{mp.get('title','?')[:60]}]  -> {len(g['results'])} matches")
+        for r in g["results"][:3]:
+            flag = "[PRE]" if r.get("type") == "preprint" else "[pub]"
+            sim  = int(r["similarity"] * 100)
+            _p(f"      {sim}% {flag}  {(r.get('title') or '')[:55]}")
+        _p("")
 
     out = OUTPUT_DIR / f"{author_id}_similar.json"
     out.write_text(
@@ -192,12 +246,12 @@ def run(candidates_path: str, top_k: int = 20,
             "author_name": author_name,
             "my_papers":   my_papers,
             "model":       searcher.model_name,
-            "results":     results,
+            "groups":      groups,
         }, indent=2, ensure_ascii=False),
         encoding="utf-8",
     )
-    print(f"Saved --> {out}")
-    return results
+    _p(f"Saved --> {out}")
+    return groups
 
 
 if __name__ == "__main__":

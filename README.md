@@ -76,6 +76,41 @@ Output: `data/output/{id}_outreach.md` — ranked tracker with email drafts.
 
 ---
 
+## Claude Skill + Gmail setup (recommended)
+
+This repo ships with a `/niw-citation` skill for [Claude Code](https://claude.ai/code). The skill runs all scripts for you, judges relevance, writes personalized emails, and — if you connect Gmail — sends them directly.
+
+**Step 1 — Install Claude Code**
+
+Download from [claude.ai/code](https://claude.ai/code) and open this project folder.
+
+**Step 2 — Connect Gmail (optional but recommended)**
+
+In Claude Code, run:
+```
+/mcp
+```
+Select **claude.ai Gmail** and complete the OAuth flow. This gives the skill permission to send emails on your behalf.
+
+You only do this once — the auth persists across sessions.
+
+**Step 3 — Run the skill**
+
+```
+/niw-citation
+```
+
+The skill will:
+1. Run all scripts automatically
+2. Read every abstract and judge whether each paper is genuinely relevant
+3. Write a specific overlap sentence for each email (no generic placeholders)
+4. Send emails via Gmail if connected, or show you the final drafts to copy-paste
+5. Track sent / replied / cited status in `data/output/<id>_progress.md`
+
+> Without Gmail connected, the skill still does everything except sending — you copy the final emails manually.
+
+---
+
 ## Step by step
 
 ```bash
