@@ -1,13 +1,12 @@
 <h2 align="center">begging-for-citations</h2>
 
 <p align="center">
-NIW / EB-1A citation toolkit — find the papers that <em>should</em> be citing you, and ask them to.
+Find papers that <em>should</em> be citing you — and ask them to.
 </p>
 
 <p align="center">
-Your citation count isn't just about how good your work is.<br>
-It's about who found it.<br>
-A hundred papers in your field were published this year. Some of them are building on exactly what you did.<br>
+A hundred papers in your field were published this year.<br>
+Some of them are building on exactly what you did.<br>
 They just haven't found you yet.
 </p>
 
@@ -19,159 +18,163 @@ They just haven't found you yet.
 
 ---
 
-## 🧠 What this is
-
-Citation outreach has the highest ROI of any academic visibility strategy — but almost no one does it systematically.
-
-The standard move is to wait. Publish, post on Twitter, hope Google Scholar picks it up, hope the right person finds it.
-
-This tool flips that:
+## How it works
 
 ```
-Your papers → OpenAlex topics → recent related papers
-                                        ↓
-                         filter out papers already citing you
-                                        ↓
-                    rank by: preprint? recency? topic overlap? small team?
-                                        ↓
-                         outreach tracker + email drafts
+Your papers (title + abstract)
+         │
+         ▼
+  Resolve OpenAlex topics
+         │
+         ▼
+  Fetch recent related papers    ← crawl_openalex.py
+  (with abstracts, 2023–now)
+         │
+         ▼
+  Filter out papers already      ← same script
+  citing you
+         │
+         ▼
+  Embed everything with          ← search_similar.py
+  sentence-transformers
+  Rank by cosine similarity
+         │
+         ▼
+  Score by receptiveness         ← find_citations.py
+  (preprint > recent > small team)
+         │
+         ▼
+  Outreach tracker + email drafts
+  data/output/{id}_outreach.md
 ```
 
-**Why preprints first:** A paper under review can still add citations. A published paper can't (without a revision). Preprints are the highest-priority targets — zero friction for the author to add you.
+**Why embeddings, not keywords:**
+Keyword search misses "vision-language model for urban sensing" when your paper says "multimodal LLM for street-view analysis." Embedding models understand both mean the same thing. You get real matches, not accidental ones.
 
 ---
 
-## ⚡ Quickstart
-
-```bash
-pip install pyalex requests
-```
-
-**If you already use [begging-for-recommenders](https://github.com/Jasper0122/begging-for-niw-eb1a-recommenders):**
-```bash
-# Reuse the same profile JSON
-python scripts/find_unaware_papers.py \
-  --profile ../begging-for-niw-eb1a-recommenders/data/profiles/<id>.json
-```
-
-**Standalone (search by name):**
-```bash
-python scripts/find_unaware_papers.py --name "Your Full Name"
-```
-
-**Standalone (with keyword fallback):**
-```bash
-python scripts/find_unaware_papers.py \
-  --name "Your Full Name" \
-  --keywords "urban sensing, street view, geospatial AI"
-```
-
-Output lands in `data/output/{author_id}_outreach.md`.
-
----
-
-## 📋 What the output looks like
-
-```markdown
-## 1. Scalable urban scene understanding via multimodal fusion
-**Score:** 63  **Type:** PREPRINT  **Year:** 2025  **Authors:** 3
-**First author:** Zhang Wei
-**DOI:** 10.48550/arXiv.2501.XXXXX
-
-<details>
-<summary>Email draft</summary>
-
-Subject: Related work you might want to cite
-
-Hi Wei,
-
-I came across your preprint "Scalable urban scene understanding..."
-— it's closely related to work I've done on [describe overlap].
-
-My paper "..." addresses [shared problem]. You might want to consider
-citing it before you finalize it.
-
-Best,
-[Your Name]
-</details>
-
-- [ ] Reviewed relevance  - [ ] Email sent  - [ ] Citation added
-```
-
-One file. Work top to bottom. Check boxes as you go.
-
----
-
-## 🏆 Scoring (what to prioritize)
-
-| Factor | Points | Why |
-|--------|--------|-----|
-| Preprint status | +30 | Still editable — zero friction to add a citation |
-| Published 2025 | +20 | Very recent, might revise |
-| Published 2024 | +15 | Recent enough |
-| Topic overlap (per topic) | +8 each, cap 24 | Higher overlap = stronger case for citation |
-| Has DOI | +5 | Real, findable paper |
-| ≤ 3 authors | +10 | Small team = more responsive to emails |
-| 4–6 authors | +5 | Still manageable |
-
-**Prioritize:** score ≥ 50, type = PREPRINT. These are your best targets.
-
----
-
-## ⚖️ How this differs from just searching Google Scholar
-
-| Manual Google Scholar | This |
-|---|---|
-| Search your keywords, get 1000 results | Filtered to papers in your exact topic cluster |
-| No way to filter "papers that don't cite me" | Automatically excludes already-citing papers |
-| No signal on who to email first | Scored and ranked by receptiveness |
-| No email drafts | Personalized draft per paper, ready to edit |
-| Spreadsheet you build by hand | Tracker with checkboxes, auto-generated |
-
----
-
-## 🔗 Works best with
-
-**[begging-for-recommenders](https://github.com/Jasper0122/begging-for-niw-eb1a-recommenders)** — the companion tool.
-
-They share the same profile JSON format:
-- `begging-for-recommenders`: finds people who already cited you → ask for letters
-- `begging-for-citations`: finds people who should cite you → grow your citation count
-
-Together they cover both directions of NIW evidence building.
-
----
-
-## 📦 Install
+## Quickstart
 
 ```bash
 git clone https://github.com/Jasper0122/begging-for-niw-eb1a-citation.git
 cd begging-for-niw-eb1a-citation
-pip install pyalex requests
+pip install -r requirements.txt
 ```
 
-No API keys required. Uses [OpenAlex](https://openalex.org) — free, no auth needed.
+**Run the full pipeline:**
+
+```bash
+# If you have a profile JSON from begging-for-recommenders:
+python scripts/find_citations.py \
+  --profile ../begging-for-niw-eb1a-recommenders/data/profiles/<id>.json
+
+# Or by author name:
+python scripts/find_citations.py --name "Your Full Name"
+```
+
+Output: `data/output/{id}_outreach.md` — ranked tracker with email drafts.
 
 ---
 
-## ⚠️ Known limits
+## Step by step
 
-- **Topic detection**: OpenAlex topics are automatically assigned and sometimes noisy — review the detected topics before trusting results
-- **False positives**: "related but shouldn't cite you" will appear — always manually review relevance before sending
-- **Rate limits**: adds sleep between requests; 10+ papers may take 2–3 minutes
-- **Preprint detection**: relies on OpenAlex type field — some preprints are miscategorized as published
+```bash
+# Step 1: crawl candidate papers from OpenAlex
+python scripts/crawl_openalex.py --profile data/profiles/<id>.json
+# → data/profiles/<id>_candidates.json
+
+# Step 2: rank by semantic similarity (embeddings)
+python scripts/search_similar.py --candidates data/profiles/<id>_candidates.json
+# → data/output/<id>_similar.json
+
+# Step 3: generate outreach tracker
+python scripts/find_citations.py --similar data/output/<id>_similar.json
+# → data/output/<id>_outreach.md
+```
+
+Re-run Step 3 any time to regenerate the tracker without re-crawling.
+Re-run Step 2 with `--min-sim 0.30` to tighten the similarity threshold.
 
 ---
 
-## 📬 The email etiquette
+## Scoring
 
-Keep it under 5 sentences. Be specific about the overlap. Don't ask — suggest.
+Final score = **similarity × 60% + receptiveness × 40%**
 
-> "You might want to consider citing it" > "Please cite my work"
+**Similarity (0–100%):** cosine similarity between candidate paper embedding and your papers' mean embedding. Higher = more semantically related.
 
-Response rate drops sharply if the email reads like a citation request rather than a genuine heads-up between researchers.
+**Receptiveness (0–60 pts):**
+
+| Factor | Points | Why |
+|--------|--------|-----|
+| Preprint | +30 | Still editable — zero cost to add a citation |
+| Published 2025 | +15 | May still revise |
+| Published 2024 | +10 | Recently active |
+| ≤ 3 authors | +10 | More responsive to individual emails |
+| Has DOI | +5 | Findable paper |
+
+**Prioritize:** similarity > 60% AND type = preprint.
 
 ---
 
-*Your citation count is partially a discovery problem, not just a quality problem.*
-*These papers exist. They overlap with yours. They just haven't found you.*
+## Models
+
+| Model | Quality | Cost | Setup |
+|-------|---------|------|-------|
+| `local` (default) | Good | Free | `pip install sentence-transformers` |
+| `openai` | Better | ~$0.01/1k papers | `export OPENAI_API_KEY=...` |
+
+```bash
+# Use OpenAI embeddings
+python scripts/find_citations.py --profile ... --model openai
+```
+
+Embeddings are cached in `data/cache/` — re-running is instant.
+
+---
+
+## Claude Skill (optional)
+
+If you use [Claude Code](https://claude.ai/code), there's a `/niw-citation` skill in `.claude/commands/` that:
+1. Runs the pipeline for you
+2. Presents results with abstracts
+3. Fills in the specific overlap sentence in each email draft using Claude
+4. Outputs a finalized tracker
+
+The skill's key value-add: Claude reads both papers and writes a *specific* overlap sentence — not a generic template.
+
+---
+
+## Works best with
+
+**[begging-for-recommenders](https://github.com/Jasper0122/begging-for-niw-eb1a-recommenders)** — the companion tool. They share the same profile JSON format.
+
+- `begging-for-recommenders`: finds people who already cited you → ask for letters
+- `begging-for-citations`: finds people who should cite you → grow citation count
+
+---
+
+## Dependencies
+
+```
+pyalex>=0.21              # OpenAlex API
+sentence-transformers>=2.7 # local embeddings (free)
+scikit-learn>=1.3          # cosine similarity
+numpy>=1.24
+# optional: openai>=1.0   # better embeddings
+```
+
+No API keys required for default mode.
+
+---
+
+## Known limits
+
+- **Abstract coverage**: OpenAlex has abstracts for ~70% of papers. Papers without abstracts are embedded from title only — lower match quality.
+- **Topic breadth**: OpenAlex topics can be broad; initial candidate pool may include adjacent fields. The similarity filter handles most of this.
+- **Threshold tuning**: default `--min-sim 0.25` is intentionally loose. If you get too many irrelevant results, try `--min-sim 0.35`.
+
+---
+
+*Your citation count is partially a discovery problem.*
+*These papers exist. They're related. They just haven't found you.*

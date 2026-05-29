@@ -1,6 +1,8 @@
 data/profiles/
 data/output/
+data/cache/
 __pycache__/
 *.pyc
 .env
 *.json
+*.npy
