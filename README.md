@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/banner.png" alt="begging-for-citations" width="100%">
+</p>
+
 <h2 align="center">begging-for-citations</h2>
 
 <p align="center">
