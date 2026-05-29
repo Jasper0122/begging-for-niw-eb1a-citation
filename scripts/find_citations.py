@@ -49,6 +49,10 @@ def score_receptiveness(paper: dict) -> float:
 def combined_score(paper: dict) -> float:
     sim  = paper.get("similarity", 0) * 100    # 0–100
     recv = score_receptiveness(paper)           # 0–60
+    # Dampen receptiveness for low-similarity papers so
+    # a preprint bonus can't lift an irrelevant paper above a relevant one
+    if paper.get("similarity", 0) < 0.50:
+        recv *= 0.2
     return round(sim * 0.6 + recv * 0.4, 1)
 
 
