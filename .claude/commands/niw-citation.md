@@ -72,9 +72,24 @@ Once both scripts finish, read the output files and move to Phase 2.
 
 ---
 
+## Phase 2.0 - Dedup against everyone already contacted (do this BEFORE judging)
+
+Never contact a person or a paper twice. This is a hard rule. Before you judge relevance or write anything, build the "already contacted" set from two sources and drop every candidate that matches it:
+
+1. **The ledger:** read `data/output/contacted.json` (and `case-demo/contacted.json` if present). It lists every prior recipient by email and paper id.
+2. **The Gmail SENT folder (authoritative, do not skip this):** the scheduled routine and past manual sessions send mail that may not be in any local file yet. For each candidate that still has an email, call the Gmail MCP search with `in:sent to:<that email>`. If anything comes back, they were already contacted.
+
+Drop a candidate if **either** its recipient email **or** its paper's OpenAlex id is already in the contacted set. Match emails case-insensitively. When in doubt, treat as already contacted and skip.
+
+Tell the user what you removed, for example: "Skipped 6 already-contacted (Tucker, Chen, Liu, Dai, Manos, Verma, all emailed 06-03)." Only the survivors go into Phase 2.
+
+After any send, append the new recipients to `contacted.json` immediately so the next run sees them. The Gmail SENT check is the backstop for runs that never wrote the ledger.
+
+---
+
 ## Phase 2 - You judge relevance (don't dump the raw list on the user)
 
-Read `data/output/<id>_similar.json` and `data/output/<id>_contacts.json`.
+Read `data/output/<id>_similar.json` and `data/output/<id>_contacts.json`, restricted to the candidates that survived Phase 2.0.
 
 The hard filter is **relevance to the applicant's actual papers**, not publication status. A paper that was merely crawled under the same broad topic is not automatically relevant. Read each abstract and decide:
 
@@ -192,7 +207,7 @@ Hi Zhang,
 Send this? [yes/no]
 ```
 
-After the user confirms, call the Gmail MCP tool to send. Update the progress file immediately after each send.
+After the user confirms, call the Gmail MCP tool to send. Then immediately update the progress file **and append the new recipient (email plus paper id plus date) to `contacted.json`** so the next run dedups correctly.
 
 **First batch: maximum 5 sends.** After sending, tell the user:
 > "First batch of 5 sent. I'd suggest waiting two weeks before the next batch, since sending too many at once risks looking like spam."
@@ -256,6 +271,7 @@ Best, [Name]
 - How to respond when a reply comes in
 
 **Never do:**
+- Contact anyone whose email or paper id is already in `contacted.json` or the Gmail SENT folder. Always run Phase 2.0 first.
 - Use an em-dash in any email
 - Send an email missing any of the four required parts
 - Fabricate a citation, venue, year, or DOI

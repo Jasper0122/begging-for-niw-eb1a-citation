@@ -1,0 +1,19 @@
+{
+  "_comment": "Authoritative ledger of everyone already contacted. The skill MUST check this AND the Gmail SENT folder before drafting, and skip any candidate whose recipient email OR paper id already appears here. Keyed primarily by recipient email (lowercased). Update after every send.",
+  "contacted": [
+    { "email": "gcafferata@udesa.edu.ar", "paper_id": "https://openalex.org/W7162698514", "paper": "Fair Geolocation Extraction from Humanitarian Documents", "first_contacted": "2026-05-29", "status": "sent" },
+    { "email": "k.mcdonough@lancaster.ac.uk", "paper_id": "https://openalex.org/W7113284141", "paper": "MapReader: Software and Principles for Computational Map Studies", "first_contacted": "2026-05-29", "status": "sent" },
+    { "email": "pbhanda2@gmu.edu", "paper_id": "https://openalex.org/W7162494036", "paper": "Behaviorally Realistic Urban Mobility Synthesis via Fine-Tuned LLMs", "first_contacted": "2026-05-29", "status": "sent" },
+    { "email": "20210019@hhu.edu.cn", "paper_id": "https://openalex.org/W7162684980", "paper": "A multi-source web geocoding optimization method based on road constraints", "first_contacted": "2026-05-29", "status": "sent" },
+    { "email": "dogii123@hotmail.com", "paper_id": "https://openalex.org/W7162693061", "paper": "Street View como instrumento de analise da segregacao socioespacial", "first_contacted": "2026-05-29", "status": "sent" },
+    { "email": "seantucker@spais.io", "paper_id": "https://openalex.org/W7162682713", "paper": "GRaaS: GeoReasoning as a Service", "first_contacted": "2026-06-03", "status": "sent", "note": "duplicate send on 2026-06-04, do not contact again" },
+    { "email": "czuohui@zjut.edu.cn", "paper_id": "https://openalex.org/W7163004571", "paper": "Dataset of geographic entities from Song Dynasty texts on Lin'an", "first_contacted": "2026-06-03", "status": "sent", "note": "duplicate send on 2026-06-04, do not contact again" },
+    { "email": "lzfgiser2001@163.com", "paper_id": "https://openalex.org/W7162763514", "paper": "Multi-scale road marking extraction from front-view images", "first_contacted": "2026-06-03", "status": "sent", "note": "duplicate send on 2026-06-04, do not contact again" },
+    { "email": "yimian.dai@gmail.com", "paper_id": "https://openalex.org/W7162700020", "paper": "RoadGIE / WorldRoadSeg-360K", "first_contacted": "2026-06-03", "status": "sent", "note": "duplicate send on 2026-06-04, do not contact again" },
+    { "email": "elias.manos@uconn.edu", "paper_id": "https://openalex.org/W7163033123", "paper": "Clustering Guided Arctic Remote Sensing Foundation Model", "first_contacted": "2026-06-03", "status": "sent", "note": "duplicate send on 2026-06-04, do not contact again" },
+    { "email": "shiviitr2003@gmail.com", "paper_id": "https://openalex.org/W7162238660", "paper": "Review of road segmentation, extraction, and classification from satellite imagery", "first_contacted": "2026-06-03", "status": "sent", "note": "duplicate send on 2026-06-04, do not contact again" },
+    { "email": "hani.rezayan@khu.ac.ir", "paper_id": "https://openalex.org/W7162807829", "paper": "Building Indoor Topology Model (BITM)", "first_contacted": "2026-06-03", "status": "sent" },
+    { "email": "zhangcb0027@foxmail.com", "paper_id": "https://openalex.org/W7162863535", "paper": "3D interactive animation of on-demand delivery flows", "first_contacted": "2026-06-03", "status": "sent" },
+    { "email": "junlan.chen0215@gmail.com", "paper_id": "https://openalex.org/W7162888256", "paper": "Novel Analytics Towards Road Crash Data Scarcity (dissertation)", "first_contacted": "2026-06-03", "status": "replied", "note": "dissertation finalized, cannot add citations; do not contact again" }
+  ]
+}
