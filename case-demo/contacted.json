@@ -14,6 +14,9 @@
     { "email": "shiviitr2003@gmail.com", "paper_id": "https://openalex.org/W7162238660", "paper": "Review of road segmentation, extraction, and classification from satellite imagery", "first_contacted": "2026-06-03", "status": "sent", "note": "duplicate send on 2026-06-04, do not contact again" },
     { "email": "hani.rezayan@khu.ac.ir", "paper_id": "https://openalex.org/W7162807829", "paper": "Building Indoor Topology Model (BITM)", "first_contacted": "2026-06-03", "status": "sent" },
     { "email": "zhangcb0027@foxmail.com", "paper_id": "https://openalex.org/W7162863535", "paper": "3D interactive animation of on-demand delivery flows", "first_contacted": "2026-06-03", "status": "sent" },
-    { "email": "junlan.chen0215@gmail.com", "paper_id": "https://openalex.org/W7162888256", "paper": "Novel Analytics Towards Road Crash Data Scarcity (dissertation)", "first_contacted": "2026-06-03", "status": "replied", "note": "dissertation finalized, cannot add citations; do not contact again" }
+    { "email": "junlan.chen0215@gmail.com", "paper_id": "https://openalex.org/W7162888256", "paper": "Novel Analytics Towards Road Crash Data Scarcity (dissertation)", "first_contacted": "2026-06-03", "status": "replied", "note": "dissertation finalized, cannot add citations; do not contact again" },
+    { "email": "tommorello@hanmail.net", "paper_id": "https://openalex.org/W7163331509", "paper": "Bridging perceived and lived space: Multimodal LLM approaches for urban park perception", "first_contacted": "2026-06-05", "status": "draft_created" },
+    { "email": "skl24@mit.edu", "paper_id": "https://openalex.org/W7163598423", "paper": "Enhancing Socioeconomic Understanding of Foundation Models with Urban Mobility (MobFusion)", "first_contacted": "2026-06-05", "status": "draft_created" },
+    { "email": "yhu42@buffalo.edu", "paper_id": "https://openalex.org/W7163079042", "paper": "A dataset from ten disasters for studying location descriptions", "first_contacted": "2026-06-05", "status": "draft_created" }
   ]
 }
