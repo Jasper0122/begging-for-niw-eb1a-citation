@@ -5,6 +5,88 @@
   "last_crawl": "2026-05-29",
   "next_crawl": "2026-06-29",
   "cadence_days": 3,
+  "my_papers": [
+    {
+      "title": "Streetviewllm: Extracting geographic information using a chain-of-thought multimodal large language model",
+      "year": 2024,
+      "doi": "10.2139/ssrn.5041619",
+      "authors": "Li, Z., Xu, J., Wang, S., Wu, Y., & Li, H.",
+      "topic": "street-view imagery, multimodal LLM, chain-of-thought, geographic information extraction",
+      "finalized": false
+    },
+    {
+      "title": "BuildingView: Constructing urban building exteriors databases with Street View imagery and multimodal large language model",
+      "year": 2025,
+      "doi": "",
+      "authors": "Li, Z., Su, Y., Wang, H., & Zhao, W.",
+      "topic": "street-view imagery, building exteriors database, multimodal LLM, urban built environment",
+      "finalized": true
+    },
+    {
+      "title": "BuildingMultiView: powering multi-scale building characterization with large language models and multi-perspective imagery",
+      "year": 2026,
+      "doi": "10.1016/j.jag.2025.105034",
+      "authors": "Li, Z., Su, Y., Biljecki, F., & Zhao, W.",
+      "topic": "multi-perspective imagery, building characterization, large language models, urban analysis",
+      "finalized": true
+    },
+    {
+      "title": "Bridging street view coverage disparities through geographic identity preserving generation from satellite view",
+      "year": 2026,
+      "doi": "10.1016/j.isprsjprs.2026.03.049",
+      "authors": "Li, Z., Zhang, F., Dai, S., & Zhao, W.",
+      "topic": "street-view generation, satellite-to-streetview, geographic identity preservation, coverage disparity",
+      "finalized": true
+    },
+    {
+      "title": "Seeing Green from Indoors in 3D: How Built Environment and Vegetation Shape Window-Level Nature Exposure",
+      "year": 2026,
+      "doi": "",
+      "authors": "Li, Z., Zou, L., Seo, J. H., Yang, M., & Yang, Y.",
+      "topic": "3D built environment, vegetation, window-level nature exposure, greenery, indoor exposure",
+      "finalized": false
+    },
+    {
+      "title": "Integrating earth observation data into the tri-environmental evaluation of the economic cost of natural disasters: a case study of 2025 LA wildfire",
+      "year": 2026,
+      "doi": "10.1016/j.jag.2026.105342",
+      "authors": "Li, Z., Li, H., Yang, Y., Wang, S., & Zhu, Y.",
+      "topic": "earth observation, natural disaster economic cost, wildfire, tri-environmental evaluation, remote sensing",
+      "finalized": true
+    },
+    {
+      "title": "DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery",
+      "year": 2026,
+      "doi": "",
+      "authors": "Li, Z., Yang, Y., Zou, L., Gong, W., Fu, K., Wang, S., Zhou, B., Cai, H., & Tian, H.",
+      "topic": "street-view imagery, hurricane damage assessment, CLIP, multimodal arbitration, disaster response",
+      "finalized": false
+    },
+    {
+      "title": "GIScholarBench: Benchmarking LLM Overconfidence in GIS Research",
+      "year": 2026,
+      "doi": "",
+      "authors": "Li, Z., et al.",
+      "topic": "LLM benchmark, GIS research, model overconfidence, geospatial QA, evaluation",
+      "finalized": false
+    },
+    {
+      "title": "Multi-source tri-environmental conceptual framework for fire impact analysis",
+      "year": 2024,
+      "doi": "",
+      "authors": "Li, Q., Li, H., Wang, S., & Qi, Y.",
+      "topic": "fire impact analysis, tri-environmental framework, multi-source data, remote sensing",
+      "finalized": true
+    },
+    {
+      "title": "The Geography of Insufficient Sleep in the Contiguous United States (CONUS)",
+      "year": 2025,
+      "doi": "",
+      "authors": "Li, Z., Yang, M., Zou, L., Ma, H., & Li, W.",
+      "topic": "spatial analysis, sleep health geography, CONUS, population health, GIS",
+      "finalized": true
+    }
+  ],
   "papers": [
     {
       "id": "https://openalex.org/W7162698514",
