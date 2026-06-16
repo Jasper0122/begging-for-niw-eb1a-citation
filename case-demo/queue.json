@@ -420,6 +420,29 @@
       "sent_date": "",
       "replied_date": "",
       "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164547987",
+      "title": "Reconstructing urban mobility from the built environment",
+      "year": 2026,
+      "type": "article",
+      "doi": "10.1038/s43588-026-01005-w",
+      "similarity": 0.62,
+      "abstract": "",
+      "first_author": "Qi Wang",
+      "institution": "Northeastern University",
+      "contact_email": "q.wang@northeastern.edu",
+      "my_paper": {
+        "title": "Streetviewllm: Extracting geographic information using a chain-of-thought multimodal large language model",
+        "abstract": "",
+        "doi": "10.2139/ssrn.5041619"
+      },
+      "status": "draft_created",
+      "finalized": true,
+      "draft_date": "2026-06-15",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
     }
   ]
 }

@@ -202,6 +202,11 @@ def _ddg_search(query: str) -> tuple:
 
 def _web_search_email(name: str, institution: str) -> str:
     """Search the web for the author's email and cross-check the match."""
+    # DISABLED 2026-06-15: the DuckDuckGo HTML endpoint hangs / times out in the
+    # cloud sandbox and contributes ~0 emails in practice (every hit comes from
+    # ORCID or the DOI landing page). Skipping it keeps the run fast and stops
+    # the whole scheduled routine from stalling on outbound web search.
+    return ""
     q = f'"{name}" {institution} email'.strip()
     html, urls = _ddg_search(q)
     if not html and not urls:

@@ -24,3 +24,5 @@ Auto-updated by the `niw-citation-outreach` routine (runs every 3 days).
 - **Excluded:** Pourebrahim LSTM/GAT environmental-dynamics benchmark (relevance to a specific paper too forced); rest had no email or were off-topic.
 - **Status updates:** none.
 - **Note:** root cause of empty cloud run unconfirmed (no log access); local crawl + find_contacts + Gmail draft all work. Likely find_contacts web-search timeouts or Gmail step in sandbox.
+- **+1 draft (Wang, published):** Reconstructing urban mobility from the built environment -> q.wang@northeastern.edu (finalized, future-work framing) [maps to StreetViewLLM]. Today total = 4 drafts.
+- **Code fix:** disabled find_contacts._web_search_email (DuckDuckGo) — it hangs in the cloud sandbox and yields ~0 emails; ORCID + DOI-page retained. Aim: stop scheduled runs stalling on outbound web search.
