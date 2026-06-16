@@ -351,6 +351,75 @@
       "sent_date": "",
       "replied_date": "",
       "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164571725",
+      "title": "TerraBench: Can Agents Reason Over Heterogeneous Earth-System Data?",
+      "year": 2026,
+      "type": "preprint",
+      "doi": "10.48550/arxiv.2606.13148",
+      "similarity": 0.6,
+      "abstract": "",
+      "first_author": "Dat Tien Nguyen",
+      "institution": "",
+      "contact_email": "Fadillah.Maani@mbzuai.ac.ae",
+      "my_paper": {
+        "title": "GIScholarBench: Benchmarking LLM Overconfidence in GIS Research",
+        "abstract": "",
+        "doi": ""
+      },
+      "status": "draft_created",
+      "finalized": false,
+      "draft_date": "2026-06-15",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164403257",
+      "title": "Satellite Sociology: Interpreting Spatial Traces of Human Activity from Earth Observation Data",
+      "year": 2026,
+      "type": "article",
+      "doi": "10.31235/osf.io/wj2nc_v2",
+      "similarity": 0.6,
+      "abstract": "",
+      "first_author": "Yuichiro Otani",
+      "institution": "",
+      "contact_email": "yuichiro@otani.co",
+      "my_paper": {
+        "title": "Streetviewllm: Extracting geographic information using a chain-of-thought multimodal large language model",
+        "abstract": "",
+        "doi": "10.2139/ssrn.5041619"
+      },
+      "status": "draft_created",
+      "finalized": false,
+      "draft_date": "2026-06-15",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164700937",
+      "title": "Emerging Flexible Designs for Geospatial Multimodal Foundation Models",
+      "year": 2026,
+      "type": "article",
+      "doi": "",
+      "similarity": 0.6,
+      "abstract": "",
+      "first_author": "Philipe Dias",
+      "institution": "",
+      "contact_email": "potnisav@ornl.gov",
+      "my_paper": {
+        "title": "Streetviewllm: Extracting geographic information using a chain-of-thought multimodal large language model",
+        "abstract": "",
+        "doi": "10.2139/ssrn.5041619"
+      },
+      "status": "draft_created",
+      "finalized": false,
+      "draft_date": "2026-06-15",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
     }
   ]
 }
