@@ -26,3 +26,18 @@ Auto-updated by the `niw-citation-outreach` routine (runs every 3 days).
 - **Note:** root cause of empty cloud run unconfirmed (no log access); local crawl + find_contacts + Gmail draft all work. Likely find_contacts web-search timeouts or Gmail step in sandbox.
 - **+1 draft (Wang, published):** Reconstructing urban mobility from the built environment -> q.wang@northeastern.edu (finalized, future-work framing) [maps to StreetViewLLM]. Today total = 4 drafts.
 - **Code fix:** disabled find_contacts._web_search_email (DuckDuckGo) — it hangs in the cloud sandbox and yields ~0 emails; ORCID + DOI-page retained. Aim: stop scheduled runs stalling on outbound web search.
+
+## 2026-06-19 (manual recovery + buffer restock)
+- **Diagnosis:** trigger fired daily 06-16..06-19 but produced 0 drafts. Root cause confirmed = queue had 0 `not_contacted` entries, so every run was forced into cloud refill, which yields 0 in the sandbox (live ORCID/DOI/web harvesting unreliable there). The 06-15 recovery drafts were SENT on 06-16 (Maani/Otani/Potnis/Wang) and got positive replies, draining the queue again.
+- **Drafted today (3, in Gmail drafts, NOT sent):**
+  - Intelligent Multimodal Retrieval and Reasoning (I-GUIDE) -> yfkang@illinois.edu (open) [StreetViewLLM]
+  - Risk-Aware LLM Agents for Geospatial Data Retrieval -> y56gao@uwaterloo.ca (open) [GIScholarBench]
+  - Complaint locations prediction w/ image-space + custom LLMs -> cyting@mmu.edu.my (finalized) [StreetViewLLM]
+- **Buffer restocked (3 not_contacted, emails committed so the cloud can draft them WITHOUT web-harvesting):**
+  - Deep learning completes US flood hazard maps (Nat Commun) -> zhang-ye@mail.tsinghua.edu.cn [DamageArbiter]
+  - Deep Semi-Supervised Multi-Task Learning of Building Features -> hueseyin.cakmak@kit.edu [BuildingMultiView]
+  - Spatio-temporal variation of building morphology in Indian Cities -> sushobhan.sen@iitgn.ac.in [BuildingView]
+- **Excluded from this crawl:** rural-dev/SDG platforms (too generic), 2 editorials/prefaces (non-research), heritage multifractal + IoT disaster framework (off-topic).
+- **Local harvest yield:** crawl 263 candidates -> 48 keyword-relevant -> find_contacts 13/38 emails. Thin yield is the real supply ceiling.
+- **Durable fix in play:** DDG web-search already disabled in find_contacts.py (18c7ba5, no more hangs) + committed not_contacted buffer means a failed cloud refill no longer starves drafting.
+- **Queue:** 3 pending(buffer), 12 drafted, 0 sent(local), 6 skipped, 1 no_contact.

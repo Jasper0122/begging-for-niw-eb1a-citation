@@ -443,6 +443,144 @@
       "sent_date": "",
       "replied_date": "",
       "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164970905",
+      "title": "Intelligent Multimodal Retrieval and Reasoning for Geospatial Knowledge Discovery on the I-GUIDE Platform",
+      "year": 2026,
+      "type": "preprint",
+      "doi": "10.48550/arxiv.2606.15838",
+      "similarity": 0.66,
+      "abstract": "Geospatial knowledge discovery increasingly requires search across heterogeneous artifacts: datasets, maps, notebooks, software, publications, and the provenance links among them. Conventional geoportals support metadata and spatial filtering, but they rarely provide semantic retrieval, graph-aware provenance traversal, and conversational synthesis in one integrated system. This paper presents I-GUIDE Smart Search, a production multimodal geospatial retrieval-augmented generation (RAG) system embedded in the I-GUIDE Platform, and reports on its design, deployment, and evaluation. The system co",
+      "first_author": "Yunfan Kang",
+      "institution": "",
+      "contact_email": "yfkang@illinois.edu",
+      "my_paper": {
+        "title": "Streetviewllm: Extracting geographic information using a chain-of-thought multimodal large language model",
+        "abstract": "",
+        "doi": "10.2139/ssrn.5041619"
+      },
+      "status": "draft_created",
+      "finalized": false,
+      "draft_date": "2026-06-19",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164962580",
+      "title": "Risk-Aware LLM Agents for Geospatial Data Retrieval: Design and Preliminary Adversarial Evaluation",
+      "year": 2026,
+      "type": "preprint",
+      "doi": "10.48550/arxiv.2606.15077",
+      "similarity": 0.7,
+      "abstract": "We present an LLM-driven framework for retrieving remote sensing data from cloud-based geospatial catalogues using natural language queries. The system converts user intent into structured API calls, enabling efficient access to satellite imagery and environmental datasets. The architecture integrates three agents: Guardrail for safety and policy enforcement, General-QA for intent interpretation, and Recommender-Analyst for schema-aware API call generation. This coordinated design ensures reliable, semantically aligned interaction with external data services. The modular framework is portable ",
+      "first_author": "Kyle Gao",
+      "institution": "",
+      "contact_email": "y56gao@uwaterloo.ca",
+      "my_paper": {
+        "title": "GIScholarBench: Benchmarking LLM Overconfidence in GIS Research",
+        "abstract": "",
+        "doi": ""
+      },
+      "status": "draft_created",
+      "finalized": false,
+      "draft_date": "2026-06-19",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164843794",
+      "title": "Enhancing complaint locations prediction with image-space embedding representations and customized large language models",
+      "year": 2026,
+      "type": "article",
+      "doi": "10.1038/s41598-026-56177-2",
+      "similarity": 0.6,
+      "abstract": "Predicting where public complaints are likely to occur is essential for proactive urban management, yet remains challenging due to the heterogeneous structured nature of urban data. Although large language models (LLMs) have demonstrated strong performance in complaint analytics, existing approaches rely on transforming structured data into text, limiting their ability to capture spatial relationships and cross-feature interactions. To address this limitation, this paper proposed an image-space embedding framework that transformed structured data into multi-channel, image-like representations ",
+      "first_author": "Theng-Jia Law",
+      "institution": "Multimedia University",
+      "contact_email": "cyting@mmu.edu.my",
+      "my_paper": {
+        "title": "Streetviewllm: Extracting geographic information using a chain-of-thought multimodal large language model",
+        "abstract": "",
+        "doi": "10.2139/ssrn.5041619"
+      },
+      "status": "draft_created",
+      "finalized": true,
+      "draft_date": "2026-06-19",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164812531",
+      "title": "Deep learning completes US flood hazard maps revealing millions exposed to previously unrecognized risk",
+      "year": 2026,
+      "type": "article",
+      "doi": "10.1038/s41467-026-74336-x",
+      "similarity": 0.55,
+      "abstract": "Flood maps are essential for disaster preparedness, insurance and climate adaptation, yet US official maps cover only one-third of river channels. Here we present a deep-learning framework that learns from existing records to produce a spatially complete 30-m flood hazard map for the contiguous US, filling unmapped regions and updating legacy extents. We estimate that the 2023 national database omits 11 million people and 4.1 million buildings in flood zones, adding 69% and 81% beyond the official baseline respectively. Crucially, our socioeconomic analysis of 917 cities reveals that entirely ",
+      "first_author": "Abraham Noah Wu",
+      "institution": "Tsinghua University",
+      "contact_email": "zhang-ye@mail.tsinghua.edu.cn",
+      "my_paper": {
+        "title": "DamageArbiter: A CLIP-Enhanced Multimodal Arbitration Framework for Hurricane Damage Assessment from Street-View Imagery",
+        "abstract": "",
+        "doi": ""
+      },
+      "status": "not_contacted",
+      "finalized": true,
+      "draft_date": "",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7164924019",
+      "title": "Deep Semi-Supervised Multi-Task Learning of Building Features for District Energy Demand Estimation",
+      "year": 2026,
+      "type": "article",
+      "doi": "10.1145/3744255.3811730",
+      "similarity": 0.55,
+      "abstract": "Building energy demand is a primary driver of greenhouse gas emissions, necessitating accurate, sector-coupled energy system analysis via co-simulation. However, parameterizing white-box building models is frequently hindered by the unavailability of essential features in public databases. We present a method to estimate missing attributes—specifically construction year (CY), building type (BT), and energy carrier (EC)—using street-level imagery (SLI) across Germany as an exemplary use case. Our automated workflow integrates SLI with 2022 German Census data for labeling and is validated agains",
+      "first_author": "Hung Cheng",
+      "institution": "Karlsruhe Institute of Technology",
+      "contact_email": "hueseyin.cakmak@kit.edu",
+      "my_paper": {
+        "title": "BuildingMultiView: powering multi-scale building characterization with large language models and multi-perspective imagery",
+        "abstract": "",
+        "doi": "10.1016/j.jag.2025.105034"
+      },
+      "status": "not_contacted",
+      "finalized": true,
+      "draft_date": "",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
+    },
+    {
+      "id": "https://openalex.org/W7165166481",
+      "title": "Spatio-temporal variation of building morphology in Indian Cities from 2018 to 2023",
+      "year": 2026,
+      "type": "article",
+      "doi": "10.1007/s12518-026-00765-4",
+      "similarity": 0.58,
+      "abstract": "",
+      "first_author": "Nishchaya Kumar Mishra",
+      "institution": "Indian Institute of Technology Gandhinagar",
+      "contact_email": "sushobhan.sen@iitgn.ac.in",
+      "my_paper": {
+        "title": "BuildingView: Constructing urban building exteriors databases with Street View imagery and multimodal large language model",
+        "abstract": "",
+        "doi": ""
+      },
+      "status": "not_contacted",
+      "finalized": true,
+      "draft_date": "",
+      "sent_date": "",
+      "replied_date": "",
+      "cited_date": ""
     }
   ]
 }

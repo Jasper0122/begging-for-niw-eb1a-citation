@@ -154,6 +154,27 @@
       "paper": "Reconstructing urban mobility from the built environment",
       "first_contacted": "2026-06-15",
       "status": "draft_created"
+    },
+    {
+      "email": "yfkang@illinois.edu",
+      "paper_id": "https://openalex.org/W7164970905",
+      "paper": "Intelligent Multimodal Retrieval and Reasoning for Geospatial Knowledge Discovery on the I-GUIDE Platform",
+      "first_contacted": "2026-06-19",
+      "status": "draft_created"
+    },
+    {
+      "email": "y56gao@uwaterloo.ca",
+      "paper_id": "https://openalex.org/W7164962580",
+      "paper": "Risk-Aware LLM Agents for Geospatial Data Retrieval: Design and Preliminary Adversarial Evaluation",
+      "first_contacted": "2026-06-19",
+      "status": "draft_created"
+    },
+    {
+      "email": "cyting@mmu.edu.my",
+      "paper_id": "https://openalex.org/W7164843794",
+      "paper": "Enhancing complaint locations prediction with image-space embedding representations and customized large language models",
+      "first_contacted": "2026-06-19",
+      "status": "draft_created"
     }
   ]
 }
