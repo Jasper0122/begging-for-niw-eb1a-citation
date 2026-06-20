@@ -175,6 +175,30 @@
       "paper": "Enhancing complaint locations prediction with image-space embedding representations and customized large language models",
       "first_contacted": "2026-06-19",
       "status": "draft_created"
+    },
+    {
+      "email": "zhang-ye@mail.tsinghua.edu.cn",
+      "paper_id": "https://openalex.org/W7164812531",
+      "paper": "Deep learning completes US flood hazard maps revealing millions exposed to previously unrecognized risk",
+      "first_contacted": "2026-06-20",
+      "status": "draft_created",
+      "note": "drafted by cloud run from committed buffer (manual trigger test)"
+    },
+    {
+      "email": "hueseyin.cakmak@kit.edu",
+      "paper_id": "https://openalex.org/W7164924019",
+      "paper": "Deep Semi-Supervised Multi-Task Learning of Building Features for District Energy Demand Estimation",
+      "first_contacted": "2026-06-20",
+      "status": "draft_created",
+      "note": "drafted by cloud run from committed buffer (manual trigger test)"
+    },
+    {
+      "email": "sushobhan.sen@iitgn.ac.in",
+      "paper_id": "https://openalex.org/W7165166481",
+      "paper": "Spatio-temporal variation of building morphology in Indian Cities from 2018 to 2023",
+      "first_contacted": "2026-06-20",
+      "status": "draft_created",
+      "note": "drafted by cloud run from committed buffer (manual trigger test)"
     }
   ]
 }

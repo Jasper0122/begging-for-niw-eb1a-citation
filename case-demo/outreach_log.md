@@ -41,3 +41,12 @@ Auto-updated by the `niw-citation-outreach` routine (runs every 3 days).
 - **Local harvest yield:** crawl 263 candidates -> 48 keyword-relevant -> find_contacts 13/38 emails. Thin yield is the real supply ceiling.
 - **Durable fix in play:** DDG web-search already disabled in find_contacts.py (18c7ba5, no more hangs) + committed not_contacted buffer means a failed cloud refill no longer starves drafting.
 - **Queue:** 3 pending(buffer), 12 drafted, 0 sent(local), 6 skipped, 1 no_contact.
+
+## 2026-06-20 (manual trigger test — buffer fix VERIFIED)
+- Manually fired the trigger to test the committed not_contacted buffer. Cloud run created 3 Gmail drafts (NOT sent) from the buffer, addressing the corresponding author correctly:
+  - Spatio-temporal building morphology, Indian cities -> sushobhan.sen@iitgn.ac.in [BuildingView]
+  - Deep semi-supervised building feature learning -> hueseyin.cakmak@kit.edu [BuildingMultiView]
+  - DL completes US flood hazard maps -> zhang-ye@mail.tsinghua.edu.cn [DamageArbiter]
+- PROVEN: the cloud CAN draft from a committed buffer and CAN create Gmail drafts. The 0-draft death loop is broken.
+- CONFIRMED push gap: cloud sandbox still cannot git push, so queue status updates rely on local sync. Gmail remains the dedup source of truth (prevents re-drafting).
+- Buffer now consumed -> restock locally before the next dry run.
