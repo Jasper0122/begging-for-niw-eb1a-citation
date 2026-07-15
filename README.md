@@ -22,6 +22,18 @@ This finds them.
 
 ---
 
+## 🎬 40-second demo
+
+<p align="center">
+  <img src="assets/demo.gif" alt="begging-for-citations demo: wakes up daily, scans OpenAlex, matches papers to yours, finds author emails via Monid, drafts one email per paper into your Gmail" width="100%">
+</p>
+
+<p align="center">
+  <a href="assets/demo.mp4">▶ Watch with sound (MP4)</a>
+</p>
+
+---
+
 ## 🧠 What this is
 
 Most researchers grow citations the same way:
