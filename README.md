@@ -30,7 +30,7 @@ Your citation count is evidence USCIS weighs. This tool grows it, on autopilot:
 
 1. **Scans** every new paper in your field (via [OpenAlex](https://openalex.org), the open index of 250M papers)
 2. **Keeps** the ones that genuinely overlap your papers — preprints first, they're still editable
-3. **Finds** each author's institutional email
+3. **Finds** each author's institutional email — one [Monid](https://monid.ai) call per author, server-side web search, verified against their affiliation
 4. **Drafts** one personalized email per paper into your Gmail — it never sends; you review, you hit send
 
 ## Quickstart
@@ -55,7 +55,7 @@ Open this folder in [Claude Code](https://claude.ai/code) and run:
 
 The skill runs the pipeline, judges relevance from the abstracts, writes the overlap sentence in each email, and (with the Gmail connector, `/mcp` → **claude.ai Gmail**) creates the drafts for you.
 
-**Set-and-forget:** run `/schedule` and ask for a daily routine pointing at this repo with the Gmail connector attached. Every day it scans, matches, finds emails, and drops fresh drafts into your Gmail. Your only job: review and hit send.
+**Set-and-forget:** run `/schedule` and ask for a daily routine pointing at this repo, with the **Gmail** and **[Monid](https://monid.ai)** connectors attached — Gmail is the state store (dedup against sent + drafts), Monid does the email lookups. Every day it scans, matches, finds emails, and drops fresh drafts into your Gmail. Your only job: review and hit send.
 
 ## Good to know
 
