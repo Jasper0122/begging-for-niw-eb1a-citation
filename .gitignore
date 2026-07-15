@@ -6,4 +6,5 @@ __pycache__/
 .env
 *.json
 !case-demo/*.json
+!.claude/skills/**/*.json
 *.npy

@@ -1,0 +1,57 @@
+{
+  "_comment": "Canonical config for the niw-citation-outreach scheduled cloud routine. The controller (SKILL.md) reads this, substitutes __DAILY_PROMPT__ with the full text of daily-prompt.md, and passes the result as the `body` to RemoteTrigger (action=update for the existing routine, action=create for a fresh one). Change values here to reconfigure; keep it the single source of truth.",
+  "known_trigger_id": "trig_01NVJBfj5VDDux9HgjisQr9n",
+  "body": {
+    "name": "niw-citation-outreach",
+    "cron_expression": "0 14 * * *",
+    "enabled": true,
+    "job_config": {
+      "ccr": {
+        "environment_id": "env_01H5ixMp5SAq3dMfLhVG53e9",
+        "session_context": {
+          "model": "claude-sonnet-5",
+          "allowed_tools": ["Bash", "Read", "Write", "Edit", "Glob", "Grep"],
+          "sources": [
+            {
+              "git_repository": {
+                "url": "https://github.com/Jasper0122/begging-for-niw-eb1a-citation"
+              }
+            }
+          ]
+        },
+        "events": [
+          {
+            "data": {
+              "message": {
+                "role": "user",
+                "content": "__DAILY_PROMPT__"
+              },
+              "parent_tool_use_id": null,
+              "session_id": "",
+              "type": "user",
+              "uuid": "a7f3c1e2-9b4d-4e6a-8c2f-1d5e7a9b3c6f"
+            }
+          }
+        ]
+      }
+    },
+    "mcp_connections": [
+      {
+        "connector_uuid": "bf2a3d5f-bbd5-4466-9dd1-d1822f0edb4e",
+        "name": "Gmail",
+        "url": "https://gmailmcp.googleapis.com/mcp/v1",
+        "permitted_tools": [],
+        "tool_policy_overrides": [],
+        "clear_tool_policy_overrides": false
+      },
+      {
+        "connector_uuid": "51371c3e-5e3f-4fc8-a2de-5eb30f0ddb81",
+        "name": "Monid",
+        "url": "https://mcp.monid.ai/v1",
+        "permitted_tools": [],
+        "tool_policy_overrides": [],
+        "clear_tool_policy_overrides": false
+      }
+    ]
+  }
+}
