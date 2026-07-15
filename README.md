@@ -14,16 +14,12 @@ NIW / EB-1A green card toolkit — find the papers that should be citing you, an
 <a href="#"><img src="https://img.shields.io/badge/works%20for-NIW%20%7C%20EB--1A-green" alt="NIW EB-1A"></a>
 </p>
 
----
-
-## 🎬 40-second demo
-
 <p align="center">
-  <img src="assets/demo.gif" alt="begging-for-citations demo: wakes up daily, scans OpenAlex, matches papers to yours, finds author emails via Monid, drafts one email per paper into your Gmail" width="100%">
+  <img src="assets/demo.gif" alt="begging-for-citations demo: wakes up daily, scans OpenAlex, matches papers to yours, finds author emails, drafts one email per paper into your Gmail" width="100%">
 </p>
 
 <p align="center">
-  <a href="assets/demo.mp4">▶ Watch with sound (MP4)</a>
+  <a href="assets/demo.mp4">▶ watch with sound</a>
 </p>
 
 ---
